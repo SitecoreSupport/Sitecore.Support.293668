@@ -7,14 +7,14 @@ XA.component.search.ajax = (function ($, document) {
                 url = typeof properties.excludeSiteName !== "undefined" && properties.excludeSiteName
                     ? properties.url
                     : XA.component.search.url.createSiteUrl(properties.url, siteName);
-			var searchQuery = this.getPrameterByName("q");// Patch 293668 Start
-			if (searchQuery){
-				url = url.replace(searchQuery, encodeURIComponent(searchQuery));
-			}// Patch 293668 End
+            var searchQuery = $xa(".search-box-input.tt-input").val();// Patch 293668 Start
+            if (searchQuery != null) {
+                url = url.replace(searchQuery, encodeURIComponent(searchQuery));
+            }// Patch 293668 End
             Backbone.ajax({
                 dataType: "json",
                 url: url,
-                success: function(data){
+                success: function (data) {
                     properties.callback(data);
                 }
             });
@@ -27,7 +27,7 @@ XA.component.search.ajax = (function ($, document) {
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
-        } 
+        }
     });
 
     return new ApiModel();
